@@ -4,6 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +32,7 @@
             android:id="@+id/mealsView"
             android:layout_width="match_parent"
             android:layout_height="390dp"
-            android:layout="@layout/meals" />
+            android:layout="@layout/menu" />
 
         <ViewStub
             android:id="@+id/exerciseView"
