@@ -1,4 +1,4 @@
-package com.BgLogger.insulin.model;
+package com.BgLogger.model.insulin;
 
 public class InsulinType {
 	private Long id;

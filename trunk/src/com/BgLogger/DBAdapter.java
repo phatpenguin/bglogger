@@ -32,12 +32,7 @@ public class DBAdapter {
 			"FOOD_NAME String not null," +
 			"GLYCEMIC_LOAD INTEGER NOT NULL);";
 			
-			
-			
-			
-			
-		 
-	
+				
 	private SQLiteHelper Helper;
 	
 	private SQLiteDatabase sqLiteDatabase;

@@ -1,4 +1,4 @@
-package com.BgLogger.insulin.model;
+package com.BgLogger.model.insulin;
 
 import java.util.Date;
 

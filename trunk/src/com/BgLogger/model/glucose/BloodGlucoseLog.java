@@ -1,4 +1,4 @@
-package com.BgLogger.glucose.model;
+package com.BgLogger.model.glucose;
 
 import java.math.BigDecimal;
 import java.util.Date;
