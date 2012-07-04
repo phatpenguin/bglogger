@@ -1,4 +1,4 @@
-package com.BgLogger.glucose.model;
+package com.BgLogger.model.glucose;
 
 public class BloodGlucoseMeasurementUnit {
 	private Long id;

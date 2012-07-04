@@ -21,13 +21,27 @@
             
             </activity>
             
-            <activity android:name="com.BgLogger.Foodlog6Activity"></activity>
+            <activity android:name="com.BgLogger.Foodlog6Activity"
+                android:theme="@android:style/Theme.NoTitleBar"></activity>
         
-         <activity android:name="com.BgLogger.foodlist"></activity>
+         <activity android:name="com.BgLogger.foodlist"
+             android:theme="@android:style/Theme.NoTitleBar"></activity>
          
-          <activity android:name="com.BgLogger.Events"></activity>
+         <activity android:name="com.BgLogger.mealcalculatorActivity"
+             android:theme="@android:style/Theme.NoTitleBar"></activity>
          
-         <activity android:name="com.BgLogger.mealcalculatorActivity"></activity>
+         <activity android:name="com.BgLogger.activity.glucose.AddGlucoseLogActivity"
+             android:theme="@android:style/Theme.NoTitleBar"></activity>
+         
+         <activity android:name="com.BgLogger.mealReportActivity"
+             android:theme="@android:style/Theme.NoTitleBar"></activity>
+         
+          <activity android:name="com.BgLogger.bloodReportActivity"
+              android:theme="@android:style/Theme.NoTitleBar"></activity>
+         
+         <activity android:name="com.BgLogger.exerciseReportActivity"
+             android:theme="@android:style/Theme.NoTitleBar"></activity>
+         
          
     </application>
     

@@ -3,5 +3,9 @@
 
     <string name="hello">Hello World, BgLoggerActivity!</string>
     <string name="app_name">BgLogger</string>
+    <string name="plus_button_content_description">Add Record</string>
+    <string name="glucose_reading_label">Blood Test Result: </string>
+    <string name="glucose_type_label">Result Type: </string>
+    <string name="logo_content_description">Logo</string>
 
 </resources>
