@@ -16,7 +16,6 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public abstract class GenericDao extends SQLiteOpenHelper{
 	private SQLiteDatabase sqLiteDatabase;
-	private Context context;
 	
 	private static final String DB_NAME = "BGLOGGER_DATABASE";
 	private static final int DB_Version = 1;
@@ -28,7 +27,6 @@ public abstract class GenericDao extends SQLiteOpenHelper{
 	public GenericDao(Context context, String tableName, String createScript) {
 		super(context, DB_NAME, CURSOR_FACTORY, DB_Version);
 		
-		this.context = context;
 		this.tableName = tableName;
 		this.createScript = createScript;
 	}
