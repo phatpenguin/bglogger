@@ -8,9 +8,12 @@ import com.BgLogger.model.GenericDao;
 /**
  * @author		Scott Leonard
  * Created:		07/01/2012
- * Modified:	07/02/2012
+ * Modified:	07/08/2012
  */
 public class BloodGlucoseLogDao extends GenericDao{
+	public static final String LOG_TIME_FIELD_NAME = "log_time";
+	public static final String READING_FIELD_NAME = "reading";
+	
 	private static final String TABLE_NAME = "blood_glucose_log";
 	private static final String CREATE_SCRIPT = "CREATE TABLE " 
 			+ TABLE_NAME + " ("
@@ -39,6 +42,7 @@ public class BloodGlucoseLogDao extends GenericDao{
 		entityMap.put("blood_glucose_measurement_unit_id", bloodGlucoseLog.getBloodGlucoseMeasurementUnitId());
 		entityMap.put("blood_glucose_type_id", bloodGlucoseLog.getBloodGlucoseTypeId());
 		entityMap.put("log_time", bloodGlucoseLog.getLogTime().toString());
+		entityMap.put("reading", bloodGlucoseLog.getReading().toString());
 		
 		return super.insert(TABLE_NAME, entityMap);
 

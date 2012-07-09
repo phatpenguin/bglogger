@@ -21,6 +21,7 @@ public class BloodGlucoseMeasurementUnitDao extends GenericDao {
 	
 	public BloodGlucoseMeasurementUnitDao(Context context) {
 		super(context, TABLE_NAME, CREATE_SCRIPT);
+		addInitialRecords();
 	}
 
 	public BloodGlucoseMeasurementUnitDao openToRead() throws SQLException {
@@ -39,5 +40,19 @@ public class BloodGlucoseMeasurementUnitDao extends GenericDao {
 		entityMap.put("dsc", bloodGlucoseMeasurementUnit.getDsc());
 		
 		return super.insert(TABLE_NAME, entityMap);
+	}
+	
+	private void addInitialRecords(){
+		BloodGlucoseMeasurementUnit bgmu = new BloodGlucoseMeasurementUnit();
+		bgmu.setDsc("American Units");
+		bgmu.setName("mg/dl");
+		
+		insert(bgmu);
+		
+		bgmu = new BloodGlucoseMeasurementUnit();
+		bgmu.setDsc("European Units");
+		bgmu.setName("mmol/L");
+		
+		insert(bgmu);
 	}
 }
