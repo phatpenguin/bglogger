@@ -2,6 +2,7 @@ package com.BgLogger;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.*;
 import android.view.*;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.view.View;
 import com.BgLogger.R;
 import com.BgLogger.activity.glucose.AddGlucoseLogActivity;
+import com.BgLogger.model.glucose.BloodGlucoseLogDao;
 
 public class BgLoggerActivity extends Activity {
 	/** Called when the activity is first created. */
@@ -53,7 +55,7 @@ public class BgLoggerActivity extends Activity {
 
 		////////////HOME////////////////////////////////////
 		BtHome.setOnClickListener(new OnClickListener() {
-			public void onClick(View arg0) {
+			public void onClick(View v) {
 				BtHome.setImageResource(R.drawable.dropover);
 				BtMeals.setImageResource(R.drawable.meal);
 				BtExercise.setImageResource(R.drawable.exce);
@@ -74,6 +76,19 @@ public class BgLoggerActivity extends Activity {
 						startActivityForResult(myIntent, 0);
 					}
 				});
+				
+				ListView glucoseLogListView = (ListView)findViewById(R.id.glucoseLogListView);
+				
+				SimpleCursorAdapter simpleCursorAdapter;
+				Cursor cursor;
+				BloodGlucoseLogDao bloodGlucoseLogDao = new BloodGlucoseLogDao(v.getContext());
+		        cursor = bloodGlucoseLogDao.queueAll();
+		        
+		        String [] from = new String [] {BloodGlucoseLogDao.LOG_TIME_FIELD_NAME, BloodGlucoseLogDao.READING_FIELD_NAME};
+		        int [] to = new int [] {R.id.LogTimeTextView, R.id.ResultTextView};
+		        
+		        simpleCursorAdapter = new SimpleCursorAdapter(v.getContext(), R.layout.glucose_log_row, cursor, from, to);
+		        glucoseLogListView.setAdapter(simpleCursorAdapter);
 			}
 		});
 
