@@ -9,9 +9,12 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
-
+
+
+
+
     <Button
-        android:id="@+id/AddRecordButton"
+        android:id="@+id/AddInsulinRecordButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@string/plus_button_content_description" 
@@ -20,7 +23,7 @@
 </LinearLayout>
     
     <ListView
-	android:id="@+id/glucoseLogListView"
+	android:id="@+id/InsulinLogListView"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"/>
     

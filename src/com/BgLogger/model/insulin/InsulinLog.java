@@ -1,8 +1,11 @@
 package com.BgLogger.model.insulin;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class InsulinLog {
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+	
 	private Long id;
 	private Long insulinTypeId;
 	private InsulinType insulinType;
@@ -67,5 +70,11 @@ public class InsulinLog {
 	 */
 	public void setLogTime(Date logTime) {
 		this.logTime = logTime;
+	}
+	
+	public String getLogTimeFormatted(){
+		if(logTime != null)
+		return sdf.format(logTime);
+		else return "";
 	}
 }

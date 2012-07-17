@@ -1,9 +1,13 @@
 package com.BgLogger.model.glucose;
 
+import android.annotation.SuppressLint;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BloodGlucoseLog {
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+	
 	private Long id;
 	private Long bloodGlucoseMeasurementUnitId;
 	private BloodGlucoseMeasurementUnit BloodGlucoseMeasurementUnit;
@@ -43,13 +47,6 @@ public class BloodGlucoseLog {
 		return BloodGlucoseMeasurementUnit;
 	}
 	/**
-	 * @param bloodGlucoseMeasurementUnit the bloodGlucoseMeasurementUnit to set
-	 */
-	public void setBloodGlucoseMeasurementUnit(
-			BloodGlucoseMeasurementUnit bloodGlucoseMeasurementUnit) {
-		BloodGlucoseMeasurementUnit = bloodGlucoseMeasurementUnit;
-	}
-	/**
 	 * @return the bloodGlucoseTypeId
 	 */
 	public Long getBloodGlucoseTypeId() {
@@ -66,12 +63,6 @@ public class BloodGlucoseLog {
 	 */
 	public BloodGlucoseType getBloodGlucoseType() {
 		return bloodGlucoseType;
-	}
-	/**
-	 * @param bloodGlucoseType the bloodGlucoseType to set
-	 */
-	public void setBloodGlucoseType(BloodGlucoseType bloodGlucoseType) {
-		this.bloodGlucoseType = bloodGlucoseType;
 	}
 	/**
 	 * @return the reading
@@ -94,7 +85,11 @@ public class BloodGlucoseLog {
 	/**
 	 * @param log_time the log_time to set
 	 */
-	public void setLog_time(Date logTime) {
+	public void setLogTime(Date logTime) {
 		this.logTime = logTime;
+	}
+	@SuppressLint("ParserError")
+	public String getLogTimeFormatted() {
+		return sdf.format(logTime);
 	}
 }
