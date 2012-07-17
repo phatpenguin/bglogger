@@ -1,6 +1,8 @@
 package com.BgLogger.activity.glucose;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
@@ -9,9 +11,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.BgLogger.R;
 import com.BgLogger.model.glucose.BloodGlucoseLog;
@@ -43,7 +47,23 @@ public class AddGlucoseLogActivity extends Activity {
     		EditText readingEditText = (EditText)findViewById(R.id.ResultEditText);
     		bgl.setReading(BigDecimal.valueOf(Double.parseDouble((readingEditText.getText().toString()))));
     		
-    		bgl.setLog_time(new Date());
+    		DatePicker datePicker = (DatePicker)findViewById(R.id.BloodGlucoseLogDate);
+    		int year = datePicker.getYear();
+    		int day = datePicker.getDayOfMonth();
+    		int month = datePicker.getMonth();
+    		
+    		TimePicker timePicker = (TimePicker)findViewById(R.id.BloodGlucoseLogTime);
+    		int hour = timePicker.getCurrentHour();
+    		int minute = timePicker.getCurrentMinute();
+    		
+    		Calendar calendar = Calendar.getInstance();
+    		calendar.set(Calendar.YEAR, year);
+    		calendar.set(Calendar.MONTH, month);
+    		calendar.set(Calendar.DAY_OF_MONTH, day);
+    		calendar.set(Calendar.HOUR, hour);
+    		calendar.set(Calendar.MINUTE, minute);
+    		
+    		bgl.setLogTime(calendar.getTime());
     		
     		bloodGlucoseLogDao.insertBloodGlucoseLog(bgl);
     		
@@ -65,8 +85,8 @@ public class AddGlucoseLogActivity extends Activity {
         setContentView(R.layout.add_glucose_log);
         
         bloodGlucoseLogDao = new BloodGlucoseLogDao(this);
-        //bloodGlucoseMeasurementUnitDao = new BloodGlucoseMeasurementUnitDao(this);
-        //bloodGlucoseTypeDao = new BloodGlucoseTypeDao(this);
+        bloodGlucoseMeasurementUnitDao = new BloodGlucoseMeasurementUnitDao(this);
+        bloodGlucoseTypeDao = new BloodGlucoseTypeDao(this);
         
         Button cancelButton = (Button)findViewById(R.id.CancelButton);
         Button submitButton = (Button)findViewById(R.id.SubmitButton);

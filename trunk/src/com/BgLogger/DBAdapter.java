@@ -106,6 +106,13 @@ public class DBAdapter {
 	   
    }
    
+///////////////////////MAYRA CODE STARTS HERE//////////////avg/////////////////
+public Cursor SUMtotal () {
+	   Cursor cursor = sqLiteDatabase.rawQuery("select rowid _id, DATE, CARBS, GLYCEMIC_LOAD, sum(CARBS) as CARBS, sum(GLYCEMIC_LOAD) as GLYCEMIC_LOAD, strftime('%Y-%m-%d', DATE) as DATE from Food_Table group by DATE", null);
+	   return cursor;
+   }
+///////////////////////MAYRA CODE ENDS HERE///////////////////////////////
+
    public class SQLiteHelper extends SQLiteOpenHelper {   
 	   
 	   public SQLiteHelper (Context context, String name, CursorFactory factory, int version) {

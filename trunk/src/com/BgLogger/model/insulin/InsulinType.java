@@ -136,7 +136,7 @@ public class InsulinType {
 	/**
 	 * @return the hasPeak
 	 */
-	public boolean isHasPeak() {
+	public boolean getHasPeak() {
 		return hasPeak;
 	}
 	/**

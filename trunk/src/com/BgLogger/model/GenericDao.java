@@ -29,6 +29,10 @@ public abstract class GenericDao extends SQLiteOpenHelper{
 		
 		this.tableName = tableName;
 		this.createScript = createScript;
+		
+		sqLiteDatabase = getWritableDatabase();
+		sqLiteDatabase.execSQL(createScript);
+		sqLiteDatabase.close();
 	}
 
 	public GenericDao openToRead() throws SQLException {
@@ -42,18 +46,28 @@ public abstract class GenericDao extends SQLiteOpenHelper{
 	}
 	
 	public long insert(String tableName, ContentValues contentValues){
-		return sqLiteDatabase.insert(tableName, null, contentValues);
+		long id = sqLiteDatabase.insertOrThrow(tableName, null, contentValues);
+		return id;
 	}
 
 	public void delete(int id) {
 		String deleteSql = "delete from " + tableName + " where _id=" + id;
 		sqLiteDatabase.rawQuery(deleteSql, null).moveToFirst();
 	}
+	
+	public void deleteAll(){
+		String deleteSql = "delete from " + tableName;
+		sqLiteDatabase.rawQuery(deleteSql, null).moveToFirst();
+	}
 
-	public Cursor queueAll() {
-		Cursor cursor = sqLiteDatabase.rawQuery("select rowid _id,* from " + tableName, null);
+	public Cursor queueAll(String ordering) {
+		Cursor cursor;
+		if(ordering == null){
+			cursor = sqLiteDatabase.rawQuery("select rowid _id,* from " + tableName, null);
+		} else {
+			cursor = sqLiteDatabase.rawQuery("select rowid _id,* from " + tableName + " order by " + ordering, null);
+		}
 		return cursor;
-
 	}
 
 	@Override

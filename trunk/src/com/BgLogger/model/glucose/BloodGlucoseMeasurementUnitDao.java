@@ -9,15 +9,16 @@ import com.BgLogger.model.GenericDao;
 /**
  * @author		Scott Leonard
  * Created:		07/01/2012
- * Modified:	07/02/2012
+ * Modified:	07/10/2012
  */
 public class BloodGlucoseMeasurementUnitDao extends GenericDao {
 	private static final String TABLE_NAME = "blood_glucose_measurement_unit";
-	private static final String CREATE_SCRIPT = "CREATE TABLE " 
+	private static final String CREATE_SCRIPT = "CREATE TABLE IF NOT EXISTS " 
 			+ TABLE_NAME + " ("
-			+ "_id integer primary key autoincrement," 
+			+ "_id integer primary key autoincrement" 
 			+ ",name varchar not null"
-			+ ",dsc varchar not null);";
+			+ ",dsc varchar not null"
+			+ ");";
 	
 	public BloodGlucoseMeasurementUnitDao(Context context) {
 		super(context, TABLE_NAME, CREATE_SCRIPT);
@@ -43,6 +44,9 @@ public class BloodGlucoseMeasurementUnitDao extends GenericDao {
 	}
 	
 	private void addInitialRecords(){
+		openToWrite();
+		deleteAll();
+		
 		BloodGlucoseMeasurementUnit bgmu = new BloodGlucoseMeasurementUnit();
 		bgmu.setDsc("American Units");
 		bgmu.setName("mg/dl");
@@ -54,5 +58,6 @@ public class BloodGlucoseMeasurementUnitDao extends GenericDao {
 		bgmu.setName("mmol/L");
 		
 		insert(bgmu);
+		close();
 	}
 }

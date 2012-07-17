@@ -39,8 +39,18 @@
           <activity android:name="com.BgLogger.bloodReportActivity"
               android:theme="@android:style/Theme.NoTitleBar"></activity>
          
+            <activity android:name="com.BgLogger.contactReportActivity"
+              android:theme="@android:style/Theme.NoTitleBar"></activity>
+          
+           <activity android:name="com.BgLogger.SaveContact"
+              android:theme="@android:style/Theme.NoTitleBar"></activity>
+            
+           <activity android:name="com.BgLogger.ViewContacts"
+              android:theme="@android:style/Theme.NoTitleBar"></activity>
+           
          <activity android:name="com.BgLogger.exerciseReportActivity"
              android:theme="@android:style/Theme.NoTitleBar"></activity>
+         <activity android:name="com.BgLogger.activity.insulin.AddInsulinLogActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
          
          
     </application>

@@ -44,7 +44,7 @@
             android:id="@+id/insulineView"
             android:layout_width="match_parent"
             android:layout_height="390dp"
-            android:layout="@layout/insuline" />
+            android:layout="@layout/insulin" />
 
         <ViewStub
             android:id="@+id/reportView"

@@ -38,7 +38,7 @@
      android:padding="2dip"
      android:paddingRight="10dip"
      android:text="@string/glucose_reading_label" />
-     
+     
 <TextView
     android:id="@+id/GlucoseResultTextView"
     android:layout_width="fill_parent"

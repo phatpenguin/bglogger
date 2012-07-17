@@ -12,7 +12,9 @@ import android.widget.Button;
 import android.view.View;
 import com.BgLogger.R;
 import com.BgLogger.activity.glucose.AddGlucoseLogActivity;
+import com.BgLogger.activity.insulin.AddInsulinLogActivity;
 import com.BgLogger.model.glucose.BloodGlucoseLogDao;
+import com.BgLogger.model.insulin.InsulinLogDao;
 
 public class BgLoggerActivity extends Activity {
 	/** Called when the activity is first created. */
@@ -29,8 +31,8 @@ public class BgLoggerActivity extends Activity {
 		addListenerOnButton();
 		ViewStub Myhome = (ViewStub) findViewById(R.id.homeView);
 		Myhome.setVisibility(View.VISIBLE);
-		
-		ImageButton addRecordImageButton = (ImageButton)findViewById(R.id.AddRecordImageButton);
+
+		Button addRecordImageButton = (Button)findViewById(R.id.AddRecordButton);
 		addRecordImageButton.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View v) {
 				Intent myIntent = new Intent(v.getContext(),
@@ -50,7 +52,7 @@ public class BgLoggerActivity extends Activity {
 		final ViewStub Myhome = (ViewStub) findViewById(R.id.homeView);
 		final ViewStub Mymeals = (ViewStub) findViewById(R.id.mealsView);
 		final ViewStub Myexercise = (ViewStub) findViewById(R.id.exerciseView);
-		final ViewStub Myinsuline = (ViewStub) findViewById(R.id.insulineView);
+		final ViewStub Myinsulin = (ViewStub) findViewById(R.id.insulineView);
 		final ViewStub Myreports = (ViewStub) findViewById(R.id.reportView);
 
 		////////////HOME////////////////////////////////////
@@ -65,10 +67,10 @@ public class BgLoggerActivity extends Activity {
 				Myhome.setVisibility(View.VISIBLE);
 				Mymeals.setVisibility(View.GONE);
 				Myexercise.setVisibility(View.GONE);
-				Myinsuline.setVisibility(View.GONE);
+				Myinsulin.setVisibility(View.GONE);
 				Myreports.setVisibility(View.GONE);
 
-				ImageButton addRecordImageButton = (ImageButton)findViewById(R.id.AddRecordImageButton);
+				Button addRecordImageButton = (Button)findViewById(R.id.AddRecordButton);
 				addRecordImageButton.setOnClickListener(new View.OnClickListener(){
 					public void onClick(View v) {
 						Intent myIntent = new Intent(v.getContext(),
@@ -76,19 +78,24 @@ public class BgLoggerActivity extends Activity {
 						startActivityForResult(myIntent, 0);
 					}
 				});
-				
+
 				ListView glucoseLogListView = (ListView)findViewById(R.id.glucoseLogListView);
-				
+
 				SimpleCursorAdapter simpleCursorAdapter;
 				Cursor cursor;
 				BloodGlucoseLogDao bloodGlucoseLogDao = new BloodGlucoseLogDao(v.getContext());
-		        cursor = bloodGlucoseLogDao.queueAll();
-		        
-		        String [] from = new String [] {BloodGlucoseLogDao.LOG_TIME_FIELD_NAME, BloodGlucoseLogDao.READING_FIELD_NAME};
-		        int [] to = new int [] {R.id.LogTimeTextView, R.id.ResultTextView};
-		        
-		        simpleCursorAdapter = new SimpleCursorAdapter(v.getContext(), R.layout.glucose_log_row, cursor, from, to);
-		        glucoseLogListView.setAdapter(simpleCursorAdapter);
+				try {
+					bloodGlucoseLogDao.openToRead();
+			        cursor = bloodGlucoseLogDao.queueAll();
+
+			        String [] field = new String [] {BloodGlucoseLogDao.LOG_TIME_FIELD_NAME, BloodGlucoseLogDao.READING_FIELD_NAME};
+			        int [] viewId = new int [] {R.id.LogTimeTextView, R.id.GlucoseResultTextView};
+
+			        simpleCursorAdapter = new SimpleCursorAdapter(v.getContext(), R.layout.glucose_log_row, cursor, field, viewId);
+			        glucoseLogListView.setAdapter(simpleCursorAdapter);
+				} finally {
+					bloodGlucoseLogDao.close();
+				}
 			}
 		});
 
@@ -104,7 +111,7 @@ public class BgLoggerActivity extends Activity {
 				Mymeals.setVisibility(View.VISIBLE);
 				Myhome.setVisibility(View.GONE);
 				Myexercise.setVisibility(View.GONE);
-				Myinsuline.setVisibility(View.GONE);
+				Myinsulin.setVisibility(View.GONE);
 				Myreports.setVisibility(View.GONE);
 
 				// /PLACE CODE HERE///
@@ -150,29 +157,54 @@ public class BgLoggerActivity extends Activity {
 				Myexercise.setVisibility(View.VISIBLE);
 				Myhome.setVisibility(View.GONE);
 				Mymeals.setVisibility(View.GONE);
-				Myinsuline.setVisibility(View.GONE);
+				Myinsulin.setVisibility(View.GONE);
 				Myreports.setVisibility(View.GONE);
 
 				// /PLACE CODE HERE///
 			}
 		});
 
-		// ////////////INSULIN//////////////////////////////
+		//////////////INSULIN//////////////////////////////
 		BtInsulin.setOnClickListener(new OnClickListener() {
-			public void onClick(View arg0) {
+			public void onClick(View v) {
 				BtHome.setImageResource(R.drawable.drop);
 				BtMeals.setImageResource(R.drawable.meal);
 				BtExercise.setImageResource(R.drawable.exce);
 				BtInsulin.setImageResource(R.drawable.medover);
 				BtGraph.setImageResource(R.drawable.graph);
 
-				Myinsuline.setVisibility(View.VISIBLE);
+				Myinsulin.setVisibility(View.VISIBLE);
 				Myhome.setVisibility(View.GONE);
 				Mymeals.setVisibility(View.GONE);
 				Myexercise.setVisibility(View.GONE);
 				Myreports.setVisibility(View.GONE);
 
-				// /PLACE CODE HERE///
+				Button addRecordImageButton = (Button)findViewById(R.id.AddInsulinRecordButton);
+				addRecordImageButton.setOnClickListener(new View.OnClickListener(){
+					public void onClick(View v) {
+						Intent myIntent = new Intent(v.getContext(),
+								AddInsulinLogActivity.class);
+						startActivityForResult(myIntent, 0);
+					}
+				});
+
+				ListView insulinLogListView = (ListView)findViewById(R.id.InsulinLogListView);
+
+				SimpleCursorAdapter simpleCursorAdapter;
+				Cursor cursor;
+				InsulinLogDao insulinLogDao = new InsulinLogDao(v.getContext());
+				try{
+					insulinLogDao.openToRead();
+			        cursor = insulinLogDao.queueAll();
+
+			        String [] field = new String [] {InsulinLogDao.LOG_TIME_FIELD_NAME, InsulinLogDao.DOSAGE_FIELD_NAME};
+			        int [] viewId = new int [] {R.id.InsulinLogTimeTextView, R.id.InsulinDosageTextView};
+
+			        simpleCursorAdapter = new SimpleCursorAdapter(v.getContext(), R.layout.insulin_log_row, cursor, field, viewId);
+			        insulinLogListView.setAdapter(simpleCursorAdapter);
+				} finally {
+		        	insulinLogDao.close();
+		        }
 			}
 		});
 
@@ -189,7 +221,7 @@ public class BgLoggerActivity extends Activity {
 				Myhome.setVisibility(View.GONE);
 				Mymeals.setVisibility(View.GONE);
 				Myexercise.setVisibility(View.GONE);
-				Myinsuline.setVisibility(View.GONE);
+				Myinsulin.setVisibility(View.GONE);
 
 				// /PLACE CODE HERE///
 
@@ -202,11 +234,21 @@ public class BgLoggerActivity extends Activity {
 					}
 				});
 
-				Button bloodButton = (Button) findViewById(R.id.bloodbuttonReport);
+				/*Button bloodButton = (Button) findViewById(R.id.bloodbuttonReport);
 				bloodButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						Intent bloodReport = new Intent(v.getContext(),
 								bloodReportActivity.class);
+						startActivityForResult(bloodReport, 0);
+					}
+				});*/
+
+
+				Button bloodButton = (Button) findViewById(R.id.bloodbuttonReport);
+				bloodButton.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						Intent bloodReport = new Intent(v.getContext(),
+								contactReportActivity.class);
 						startActivityForResult(bloodReport, 0);
 					}
 				});
