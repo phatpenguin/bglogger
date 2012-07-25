@@ -54,6 +54,7 @@ public class BloodGlucoseTypeDao extends GenericDao{
 		
 		insert(bloodGlucoseType);
 		
+		
 		bloodGlucoseType = new BloodGlucoseType();
 		bloodGlucoseType.setDsc("After eating meals of 25 grams of carbs or more");
 		bloodGlucoseType.setName("Post-meal");

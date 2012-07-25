@@ -30,6 +30,12 @@
          <activity android:name="com.BgLogger.mealcalculatorActivity"
              android:theme="@android:style/Theme.NoTitleBar"></activity>
          
+          <activity android:name="com.BgLogger.ExerciseActivity"
+             android:theme="@android:style/Theme.NoTitleBar"></activity>
+          
+                    <activity android:name="com.BgLogger.MedicineActivity"
+             android:theme="@android:style/Theme.NoTitleBar"></activity>
+         
          <activity android:name="com.BgLogger.activity.glucose.AddGlucoseLogActivity"
              android:theme="@android:style/Theme.NoTitleBar"></activity>
          
