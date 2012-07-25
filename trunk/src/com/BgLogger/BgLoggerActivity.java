@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.*;
+import android.widget.AdapterView.OnItemClickListener;
 import android.view.*;
 import android.view.View.OnClickListener;
 
@@ -31,7 +32,7 @@ public class BgLoggerActivity extends Activity {
 		addListenerOnButton();
 		ViewStub Myhome = (ViewStub) findViewById(R.id.homeView);
 		Myhome.setVisibility(View.VISIBLE);
-
+		
 		Button addRecordImageButton = (Button)findViewById(R.id.AddRecordButton);
 		addRecordImageButton.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View v) {
@@ -78,24 +79,30 @@ public class BgLoggerActivity extends Activity {
 						startActivityForResult(myIntent, 0);
 					}
 				});
-
-				ListView glucoseLogListView = (ListView)findViewById(R.id.glucoseLogListView);
-
+				
+				final ListView glucoseLogListView = (ListView)findViewById(R.id.glucoseLogListView);
+				
 				SimpleCursorAdapter simpleCursorAdapter;
 				Cursor cursor;
 				BloodGlucoseLogDao bloodGlucoseLogDao = new BloodGlucoseLogDao(v.getContext());
-				try {
-					bloodGlucoseLogDao.openToRead();
-			        cursor = bloodGlucoseLogDao.queueAll();
-
-			        String [] field = new String [] {BloodGlucoseLogDao.LOG_TIME_FIELD_NAME, BloodGlucoseLogDao.READING_FIELD_NAME};
-			        int [] viewId = new int [] {R.id.LogTimeTextView, R.id.GlucoseResultTextView};
-
-			        simpleCursorAdapter = new SimpleCursorAdapter(v.getContext(), R.layout.glucose_log_row, cursor, field, viewId);
-			        glucoseLogListView.setAdapter(simpleCursorAdapter);
-				} finally {
-					bloodGlucoseLogDao.close();
-				}
+				bloodGlucoseLogDao.openToRead(); 
+		        cursor = bloodGlucoseLogDao.queueAll();
+		        
+		        String [] field = new String [] {BloodGlucoseLogDao.LOG_TIME_FIELD_NAME, BloodGlucoseLogDao.READING_FIELD_NAME};
+		        int [] viewId = new int [] {R.id.LogTimeTextView, R.id.GlucoseResultTextView};
+		        
+		        simpleCursorAdapter = new SimpleCursorAdapter(v.getContext(), R.layout.glucose_log_row, cursor, field, viewId);
+		        glucoseLogListView.setAdapter(simpleCursorAdapter);
+		        
+		        glucoseLogListView.setOnItemClickListener(new OnItemClickListener() {
+		            public void onItemClick(AdapterView<?> myAdapter, View v, int index, long mylng) {
+		              Object selectedFromList = (glucoseLogListView.getItemAtPosition(index));
+		              
+		              Intent myIntent = new Intent(v.getContext(),
+								AddGlucoseLogActivity.class);
+						startActivityForResult(myIntent, 0);
+		            }    
+		        });
 			}
 		});
 
@@ -145,26 +152,50 @@ public class BgLoggerActivity extends Activity {
 			}
 		});
 
-		// /////////////EXERCISE////////////////////////////
-		BtExercise.setOnClickListener(new OnClickListener() {
-			public void onClick(View arg0) {
-				BtHome.setImageResource(R.drawable.drop);
-				BtMeals.setImageResource(R.drawable.meal);
-				BtExercise.setImageResource(R.drawable.exceover);
-				BtInsulin.setImageResource(R.drawable.med);
-				BtGraph.setImageResource(R.drawable.graph);
+///////////////EXERCISE////////////////////////////
+BtExercise.setOnClickListener(new OnClickListener() {
+public void onClick(View arg0) {
+BtHome.setImageResource(R.drawable.drop);
+BtMeals.setImageResource(R.drawable.meal);
+BtExercise.setImageResource(R.drawable.exceover);
+BtInsulin.setImageResource(R.drawable.med);
+BtGraph.setImageResource(R.drawable.graph);
 
-				Myexercise.setVisibility(View.VISIBLE);
-				Myhome.setVisibility(View.GONE);
-				Mymeals.setVisibility(View.GONE);
-				Myinsulin.setVisibility(View.GONE);
-				Myreports.setVisibility(View.GONE);
+Myexercise.setVisibility(View.VISIBLE);
+Myhome.setVisibility(View.GONE);
+Mymeals.setVisibility(View.GONE);
+Myinsulin.setVisibility(View.GONE);
+Myreports.setVisibility(View.GONE);
 
-				// /PLACE CODE HERE///
-			}
-		});
+///PLACE CODE HERE///
 
-		//////////////INSULIN//////////////////////////////
+
+Button AddWorkoutButton = (Button)findViewById(R.id.AddWorkoutButton);
+Button AddMedicationButton = (Button)findViewById(R.id.AddMedicationButton);
+
+AddWorkoutButton.setOnClickListener(new View.OnClickListener() {
+	public void onClick(View v) {
+		Intent myIntent = new Intent(v.getContext(),
+				ExerciseActivity.class);
+		startActivityForResult(myIntent, 0);
+	}
+});
+
+
+AddMedicationButton.setOnClickListener(new View.OnClickListener() {
+	public void onClick(View v) {
+		Intent myIntent = new Intent(v.getContext(),
+				MedicineActivity.class);
+		startActivityForResult(myIntent, 0);
+	}
+});
+
+}
+});
+
+
+
+		// ////////////INSULIN//////////////////////////////
 		BtInsulin.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				BtHome.setImageResource(R.drawable.drop);
@@ -187,24 +218,22 @@ public class BgLoggerActivity extends Activity {
 						startActivityForResult(myIntent, 0);
 					}
 				});
-
+				
+		
+				
 				ListView insulinLogListView = (ListView)findViewById(R.id.InsulinLogListView);
-
+				
 				SimpleCursorAdapter simpleCursorAdapter;
 				Cursor cursor;
 				InsulinLogDao insulinLogDao = new InsulinLogDao(v.getContext());
-				try{
-					insulinLogDao.openToRead();
-			        cursor = insulinLogDao.queueAll();
-
-			        String [] field = new String [] {InsulinLogDao.LOG_TIME_FIELD_NAME, InsulinLogDao.DOSAGE_FIELD_NAME};
-			        int [] viewId = new int [] {R.id.InsulinLogTimeTextView, R.id.InsulinDosageTextView};
-
-			        simpleCursorAdapter = new SimpleCursorAdapter(v.getContext(), R.layout.insulin_log_row, cursor, field, viewId);
-			        insulinLogListView.setAdapter(simpleCursorAdapter);
-				} finally {
-		        	insulinLogDao.close();
-		        }
+				insulinLogDao.openToRead();
+		        cursor = insulinLogDao.queueAll();
+		        
+		        String [] field = new String [] {InsulinLogDao.LOG_TIME_FIELD_NAME, InsulinLogDao.DOSAGE_FIELD_NAME};
+		        int [] viewId = new int [] {R.id.InsulinLogTimeTextView, R.id.InsulinDosageTextView};
+		        
+		        simpleCursorAdapter = new SimpleCursorAdapter(v.getContext(), R.layout.insulin_log_row, cursor, field, viewId);
+		        insulinLogListView.setAdapter(simpleCursorAdapter);
 			}
 		});
 
@@ -242,8 +271,8 @@ public class BgLoggerActivity extends Activity {
 						startActivityForResult(bloodReport, 0);
 					}
 				});*/
-
-
+				
+				
 				Button bloodButton = (Button) findViewById(R.id.bloodbuttonReport);
 				bloodButton.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {

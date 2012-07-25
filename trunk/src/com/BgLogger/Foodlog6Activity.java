@@ -12,6 +12,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -71,7 +74,6 @@ public class Foodlog6Activity extends Activity {
                 setResult(RESULT_OK, intent);
                 finish();
             }
-
         });
         
         
@@ -185,7 +187,13 @@ Button.OnClickListener buttondeleteOnClickListener = new Button.OnClickListener(
     
 };
     
-    
+@Override
+public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+    super.onCreateContextMenu(menu, v, menuInfo);
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.log_item_context_menu, menu);
+  }
+
     
     
     @Override
